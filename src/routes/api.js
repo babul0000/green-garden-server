@@ -6,6 +6,8 @@ import Blog from '../models/Blog.js';
 import Booking from '../models/Booking.js';
 import Message from '../models/Message.js';
 import Career from '../models/Career.js';
+import Setting from '../models/Setting.js';
+
 
 const router = express.Router();
 
