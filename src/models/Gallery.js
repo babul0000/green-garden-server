@@ -5,7 +5,8 @@ const GallerySchema = new mongoose.Schema({
   beforeImageUrl: { type: String }, // For before/after comparisons
   category: { type: String, required: true }, // e.g. Rooftop, Vertical, Landscape, Indoor
   title: { type: String, required: true },
-  caption: { type: String }
+  caption: { type: String },
+  watermarked: { type: Boolean, default: true }
 }, { timestamps: true });
 
 const Gallery = mongoose.model('Gallery', GallerySchema);
