@@ -3,7 +3,7 @@ import Project from './models/Project.js';
 import Gallery from './models/Gallery.js';
 import Blog from './models/Blog.js';
 
-export const seedDatabase = async () => {
+export const seedDatabase = async (): Promise<void> => {
   try {
     // 1. Seed Services
     const serviceCount = await Service.countDocuments();
@@ -89,14 +89,14 @@ export const seedDatabase = async () => {
         {
           title: "Gulshan Rooftop Paradise",
           imageUrl: "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?q=80&w=800&auto=format&fit=crop",
-          beforeImageUrl: "https://images.unsplash.com/photo-1590069261209-f8e9b8642343?q=80&w=800&auto=format&fit=crop", // empty concrete roof
+          beforeImageUrl: "https://images.unsplash.com/photo-1590069261209-f8e9b8642343?q=80&w=800&auto=format&fit=crop",
           category: "Rooftop",
           caption: "A 1200 sq. ft concrete rooftop transformed into a lush sanctuary with fruit trees, lawn, and pergolas."
         },
         {
           title: "Corporate Green Facade",
           imageUrl: "https://images.unsplash.com/photo-1530731141654-59610f3b729f?q=80&w=800&auto=format&fit=crop",
-          beforeImageUrl: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800&auto=format&fit=crop", // bare wall
+          beforeImageUrl: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800&auto=format&fit=crop",
           category: "Vertical",
           caption: "Gulshan commercial reception feature wall utilizing automated drip-irrigation geo-fabric pocket grid."
         },
@@ -140,6 +140,7 @@ export const seedDatabase = async () => {
       console.log('Blogs seeded successfully.');
     }
   } catch (error) {
-    console.error('Error seeding database:', error.message);
+    const err = error as Error;
+    console.error('Error seeding database:', err.message);
   }
 };

@@ -1,6 +1,7 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema, Model } from 'mongoose';
+import { ICareer } from '../types/index.js';
 
-const CareerSchema = new mongoose.Schema({
+const CareerSchema = new Schema<ICareer>({
   name: { type: String, required: true },
   email: { type: String, required: true },
   phone: { type: String, required: true },
@@ -10,5 +11,5 @@ const CareerSchema = new mongoose.Schema({
   status: { type: String, enum: ['Pending', 'Reviewing', 'Shortlisted', 'Rejected'], default: 'Pending' }
 }, { timestamps: true });
 
-const Career = mongoose.model('Career', CareerSchema);
+const Career: Model<ICareer> = mongoose.models.Career || mongoose.model<ICareer>('Career', CareerSchema);
 export default Career;

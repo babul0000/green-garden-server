@@ -1,10 +1,11 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema, Model } from 'mongoose';
+import { IProject } from '../types/index.js';
 
-const ProjectSchema = new mongoose.Schema({
+const ProjectSchema = new Schema<IProject>({
   name: { type: String, required: true },
   slug: { type: String, required: true, unique: true },
   client: { type: String },
-  category: { type: String, required: true }, // e.g. Residential, Commercial, Villa, Office, Apartment
+  category: { type: String, required: true },
   imageUrl: { type: String, required: true },
   videoUrl: { type: String },
   location: { type: String },
@@ -20,5 +21,5 @@ const ProjectSchema = new mongoose.Schema({
   featured: { type: Boolean, default: false }
 }, { timestamps: true });
 
-const Project = mongoose.model('Project', ProjectSchema);
+const Project: Model<IProject> = mongoose.models.Project || mongoose.model<IProject>('Project', ProjectSchema);
 export default Project;

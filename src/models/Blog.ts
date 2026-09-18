@@ -1,12 +1,13 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema, Model } from 'mongoose';
+import { IBlog, IComment } from '../types/index.js';
 
-const CommentSchema = new mongoose.Schema({
+const CommentSchema = new Schema<IComment>({
   name: { type: String, required: true },
   text: { type: String, required: true },
-  approved: { type: Boolean, default: true } // auto-approved for simplicity, but editable by admin
+  approved: { type: Boolean, default: true }
 }, { timestamps: true });
 
-const BlogSchema = new mongoose.Schema({
+const BlogSchema = new Schema<IBlog>({
   title: { type: String, required: true },
   slug: { type: String, required: true, unique: true },
   author: { type: String, required: true },
@@ -17,5 +18,5 @@ const BlogSchema = new mongoose.Schema({
   comments: [CommentSchema]
 }, { timestamps: true });
 
-const Blog = mongoose.model('Blog', BlogSchema);
+const Blog: Model<IBlog> = mongoose.models.Blog || mongoose.model<IBlog>('Blog', BlogSchema);
 export default Blog;

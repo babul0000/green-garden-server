@@ -1,6 +1,7 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema, Model } from 'mongoose';
+import { IBooking } from '../types/index.js';
 
-const BookingSchema = new mongoose.Schema({
+const BookingSchema = new Schema<IBooking>({
   clientName: { type: String, required: true },
   clientEmail: { type: String, required: true },
   phone: { type: String, required: true },
@@ -13,5 +14,5 @@ const BookingSchema = new mongoose.Schema({
   bookingDate: { type: Date, default: Date.now }
 }, { timestamps: true });
 
-const Booking = mongoose.model('Booking', BookingSchema);
+const Booking: Model<IBooking> = mongoose.models.Booking || mongoose.model<IBooking>('Booking', BookingSchema);
 export default Booking;
