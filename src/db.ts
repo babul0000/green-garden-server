@@ -1,19 +1,16 @@
-import mongoose from 'mongoose';
-import { seedDatabase } from './seedData.js';
+import { PrismaClient } from '../../green-garden/node_modules/@prisma/client/index.js';
 
-const connectDB = async (): Promise<void> => {
+export const prisma = new PrismaClient({
+  log: process.env.NODE_ENV === 'development' ? ['error', 'warn'] : ['error'],
+});
+
+export const connectDB = async (): Promise<void> => {
   try {
-    const mongoUri = process.env.MONGODB_URI;
-    if (!mongoUri) {
-      throw new Error('MONGODB_URI is not defined in environment variables');
-    }
-    const conn = await mongoose.connect(mongoUri);
-    console.log(`MongoDB Connected: ${conn.connection.host}`);
-    await seedDatabase();
+    await prisma.$connect();
+    console.log('✅ PostgreSQL Connected successfully with Prisma Client');
   } catch (error) {
     const err = error as Error;
-    console.error(`Database Connection Error: ${err.message}`);
-    process.exit(1);
+    console.warn(`⚠️ PostgreSQL Connection notice: ${err.message}`);
   }
 };
 

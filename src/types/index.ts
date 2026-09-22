@@ -1,17 +1,16 @@
-import { Document, Types } from 'mongoose';
-
-export interface IService extends Document {
+export interface IService {
+  id?: string;
   label: string;
   slug: string;
-  desc: string;
+  category?: string;
+  desc?: string;
   longContent?: string;
   icon?: string;
   banner?: string;
-  seoTitle?: string;
-  seoKeywords?: string;
-  seoDescription?: string;
-  createdAt: Date;
-  updatedAt: Date;
+  pricing?: string;
+  features?: string[];
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export interface ITestimonial {
@@ -20,92 +19,106 @@ export interface ITestimonial {
   rating?: number;
 }
 
-export interface IProject extends Document {
+export interface IProject {
+  id?: string;
   name: string;
   slug: string;
-  client?: string;
+  clientId?: string;
+  clientName?: string;
+  clientPhone?: string;
   category: string;
-  imageUrl: string;
-  videoUrl?: string;
   location?: string;
-  duration?: string;
-  budgetRange?: string;
-  challenges?: string;
-  solution?: string;
-  clientTestimonial?: ITestimonial;
-  featured: boolean;
-  createdAt: Date;
-  updatedAt: Date;
+  description?: string;
+  progress?: number;
+  status?: string;
+  budget?: number;
+  totalExpense?: number;
+  startDate?: Date;
+  deadline?: Date;
+  completionDate?: Date;
+  beforeImage?: string;
+  afterImage?: string;
+  wipImages?: string[];
+  images?: string[];
+  featured?: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
-export interface IGallery extends Document {
+export interface IGallery {
+  id?: string;
   imageUrl: string;
   beforeImageUrl?: string;
   category: string;
   title: string;
   caption?: string;
-  watermarked: boolean;
-  createdAt: Date;
-  updatedAt: Date;
+  featured?: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export interface IComment {
-  _id?: Types.ObjectId;
+  id?: string;
   name: string;
   text: string;
   approved: boolean;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  blogId?: string;
+  userId?: string;
 }
 
-export interface IBlog extends Document {
+export interface IBlog {
+  id?: string;
   title: string;
   slug: string;
   author: string;
-  coverImage: string;
+  coverImage?: string;
   category: string;
   content: string;
-  readingTime: string;
-  comments: Types.DocumentArray<IComment & Document>;
-  createdAt: Date;
-  updatedAt: Date;
+  readingTime?: string;
+  comments?: IComment[];
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
-export interface IBooking extends Document {
+export interface IBooking {
+  id?: string;
   clientName: string;
   clientEmail: string;
-  phone: string;
+  phone?: string;
   address?: string;
   service: string;
   budgetRange?: string;
   message?: string;
-  status: 'Pending' | 'Confirmed' | 'Completed';
-  assignedStaff: string;
-  bookingDate: Date;
-  createdAt: Date;
-  updatedAt: Date;
+  status: string;
+  paymentStatus?: string;
+  assignedStaff?: string;
+  bookingDate?: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
-export interface IMessage extends Document {
+export interface IMessage {
+  id?: string;
   name: string;
   email: string;
   phone?: string;
   subject?: string;
   message: string;
-  createdAt: Date;
-  updatedAt: Date;
+  isRead?: boolean;
+  createdAt?: Date;
 }
 
-export interface ICareer extends Document {
+export interface ICareer {
+  id?: string;
   name: string;
   email: string;
   phone: string;
   department: string;
   coverLetter?: string;
   resumeUrl: string;
-  status: 'Pending' | 'Reviewing' | 'Shortlisted' | 'Rejected';
-  createdAt: Date;
-  updatedAt: Date;
+  status?: string;
+  createdAt?: Date;
 }
 
 export interface ISiteConfig {
@@ -120,9 +133,10 @@ export interface ISiteConfig {
   [key: string]: unknown;
 }
 
-export interface ISetting extends Document {
+export interface ISetting {
+  id?: string;
   key: string;
   value: ISiteConfig | Record<string, unknown>;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 }

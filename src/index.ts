@@ -1,7 +1,7 @@
 import express, { Request, Response, Application } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import connectDB from './db.js';
+import connectDB, { prisma } from './db.js';
 import apiRouter from './routes/api.js';
 
 dotenv.config();
@@ -22,16 +22,25 @@ app.use(express.json());
 // API Routes
 app.use('/api', apiRouter);
 
-app.get('/api/health', (_req: Request, res: Response) => {
+app.get('/api/health', async (_req: Request, res: Response) => {
+  let dbStatus = 'connected';
+  try {
+    await prisma.$queryRaw`SELECT 1`;
+  } catch {
+    dbStatus = 'disconnected';
+  }
+
   res.status(200).json({
     status: 'ok',
-    message: 'AR Green Garden API is running smoothly with MongoDB',
+    database: 'PostgreSQL (Prisma ORM)',
+    dbStatus,
+    message: 'AR Green Garden API is running smoothly with PostgreSQL and Prisma ORM',
     timestamp: new Date().toISOString()
   });
 });
 
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log(`🌿 AR Green Garden Server is running on port ${PORT} with PostgreSQL & Prisma`);
 });
 
 export default app;

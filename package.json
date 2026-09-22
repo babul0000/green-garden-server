@@ -7,20 +7,23 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
-    "dev": "tsx watch src/index.ts"
+    "dev": "tsx watch src/index.ts",
+    "db:seed": "npx tsx src/seedData.ts"
   },
   "dependencies": {
+    "@prisma/client": "^6.19.3",
+    "bcryptjs": "^3.0.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
-    "express": "^4.19.2",
-    "mongodb": "^7.5.0",
-    "mongoose": "^9.9.1"
+    "express": "^4.19.2"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/node": "^26.6.1",
     "nodemon": "^3.1.0",
+    "prisma": "^6.19.3",
     "tsx": "^4.23.13",
     "typescript": "^7.0.2"
   }
