@@ -65,6 +65,9 @@ export const seedDatabase = async () => {
             });
             console.log('✅ Services seeded successfully in PostgreSQL.');
         }
+        // Call Step 3 enhanced seed to ensure all 7 categories and full projects/gallery exist
+        const { seedStep3Data } = await import('./seedStep3.js');
+        await seedStep3Data();
         // 2. Seed Projects
         const projectCount = await prisma.project.count();
         if (projectCount === 0) {

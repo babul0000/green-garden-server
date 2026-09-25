@@ -18,9 +18,22 @@ function calculateExperience(joiningDate) {
 // ==========================================
 // 1. SERVICES ROUTES
 // ==========================================
-router.get('/services', async (_req, res) => {
+router.get('/services', async (req, res) => {
     try {
+        const { category, search } = req.query;
+        const where = {};
+        if (category && category !== 'All') {
+            where.category = { contains: String(category), mode: 'insensitive' };
+        }
+        if (search) {
+            where.OR = [
+                { label: { contains: String(search), mode: 'insensitive' } },
+                { desc: { contains: String(search), mode: 'insensitive' } },
+                { category: { contains: String(search), mode: 'insensitive' } },
+            ];
+        }
         const services = await prisma.service.findMany({
+            where,
             orderBy: { createdAt: 'desc' },
         });
         res.json(services);
@@ -94,9 +107,25 @@ router.delete('/services/:id', async (req, res) => {
 // ==========================================
 // 2. PROJECTS ROUTES
 // ==========================================
-router.get('/projects', async (_req, res) => {
+router.get('/projects', async (req, res) => {
     try {
+        const { category, status, search } = req.query;
+        const where = {};
+        if (category && category !== 'All') {
+            where.category = { contains: String(category), mode: 'insensitive' };
+        }
+        if (status && status !== 'All') {
+            where.status = String(status);
+        }
+        if (search) {
+            where.OR = [
+                { name: { contains: String(search), mode: 'insensitive' } },
+                { location: { contains: String(search), mode: 'insensitive' } },
+                { description: { contains: String(search), mode: 'insensitive' } },
+            ];
+        }
         const projects = await prisma.project.findMany({
+            where,
             include: {
                 assignments: {
                     include: { employee: true },
@@ -189,9 +218,15 @@ router.delete('/projects/:id', async (req, res) => {
 // ==========================================
 // 3. GALLERY ROUTES
 // ==========================================
-router.get('/gallery', async (_req, res) => {
+router.get('/gallery', async (req, res) => {
     try {
+        const { category } = req.query;
+        const where = {};
+        if (category && category !== 'All') {
+            where.category = { contains: String(category), mode: 'insensitive' };
+        }
         const items = await prisma.galleryItem.findMany({
+            where,
             orderBy: { createdAt: 'desc' },
         });
         res.json(items);
