@@ -160,7 +160,7 @@ export const seedDatabase = async () => {
                     email: "admin@argreengarden.com",
                     password: hashedPassword,
                     role: "ADMIN",
-                    phone: "01620692449",
+                    phone: "01883012641",
                 },
             });
             const doctorUser = await prisma.user.create({
@@ -202,7 +202,7 @@ export const seedDatabase = async () => {
                     key: "site_config",
                     value: {
                         title: "A R Green Garden",
-                        phone: "01620692449",
+                        phone: "01883012641",
                         email: "info@argreengarden.com",
                         address: "42/A, Road 9/A, Dhanmondi, Dhaka",
                         fbPage: "https://facebook.com/argreengarden",

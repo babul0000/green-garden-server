@@ -554,7 +554,7 @@ router.get('/settings', async (_req, res) => {
                     key: 'site_config',
                     value: {
                         title: 'A R Green Garden',
-                        phone: '01620692449',
+                        phone: '01883012641',
                         email: 'info@argreengarden.com',
                         address: '42/A, Road 9/A, Dhanmondi, Dhaka',
                         fbPage: 'https://facebook.com/argreengarden',
