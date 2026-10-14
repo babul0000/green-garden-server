@@ -153,7 +153,7 @@ export const seedDatabase = async () => {
         // 5. Seed Users & Employees
         const userCount = await prisma.user.count();
         if (userCount === 0) {
-            const hashedPassword = await bcrypt.hash("admin12345", 10);
+            const hashedPassword = await bcrypt.hash("admin123", 10);
             const adminUser = await prisma.user.create({
                 data: {
                     name: "A R Green Garden Admin",
