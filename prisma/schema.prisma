@@ -71,6 +71,7 @@ model Employee {
   projectAssignments    ProjectAssignment[]
   treeDoctorAssignments TreeDoctorRequest[]   @relation("DoctorAssigned")
   maintenanceTasks      MaintenanceSchedule[] @relation("TechnicianAssigned")
+  assignedBookings      Booking[]             @relation("StaffBookings")
 
   @@map("employees")
 }
@@ -430,12 +431,14 @@ model Booking {
   message       String?
   status        String   @default("Pending")
   paymentStatus String   @default("unpaid")
-  assignedStaff String?  @default("Unassigned")
-  bookingDate   DateTime @default(now())
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  userId        String?
-  user          User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  assignedStaff       String?   @default("Unassigned")
+  assignedStaffId     String?
+  assignedStaffMember Employee? @relation("StaffBookings", fields: [assignedStaffId], references: [id], onDelete: SetNull)
+  bookingDate         DateTime  @default(now())
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+  userId              String?
+  user                User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
 
   @@map("bookings")
 }
