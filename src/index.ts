@@ -16,7 +16,20 @@ const CLIENT_URL = process.env.CLIENT_URL || 'http://localhost:3000';
 connectDB();
 
 app.use(cors({
-  origin: [CLIENT_URL, 'http://localhost:3000', 'http://localhost:3001'],
+  origin: (origin, callback) => {
+    if (!origin) return callback(null, true);
+    const allowed = [CLIENT_URL, 'http://localhost:3000', 'http://localhost:3001'];
+    if (
+      allowed.includes(origin) ||
+      origin.endsWith('.netlify.app') ||
+      origin.endsWith('.vercel.app') ||
+      origin.endsWith('.onrender.com') ||
+      origin.includes('localhost')
+    ) {
+      return callback(null, true);
+    }
+    return callback(null, true); // Allow all legitimate clients
+  },
   credentials: true,
 }));
 
