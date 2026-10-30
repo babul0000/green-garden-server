@@ -381,12 +381,16 @@ model Review {
   location  String?
   photoUrl  String?
   status    String   @default("Approved")
+  featured  Boolean  @default(false)
+  adminReply String?
   userId    String?
   user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
   projectId String?
   project   Project? @relation(fields: [projectId], references: [id], onDelete: SetNull)
   createdAt DateTime @default(now())
 
+  @@index([status])
+  @@index([featured])
   @@map("reviews")
 }
 
@@ -417,6 +421,8 @@ model Comment {
   userId    String?
   user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
 
+  @@index([approved])
+  @@index([blogId])
   @@map("comments")
 }
 
@@ -454,6 +460,8 @@ model CareerApplication {
   status      String   @default("Pending")
   createdAt   DateTime @default(now())
 
+  @@index([status])
+  @@index([createdAt])
   @@map("career_applications")
 }
 
