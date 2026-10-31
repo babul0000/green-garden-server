@@ -48,24 +48,22 @@ The API will be available at `http://localhost:5000`.
 ## 📦 Scripts
 - `npm run dev` — Starts dev server with `tsx watch`
 - `npm run build` — Generates Prisma client and compiles TypeScript to `dist/`
-
----
-
-## 📅 Maintenance & Release Log
-- **29 October 2026:**
-  - Prisma client database bundle verification and synchronization.
-  - Production readiness and system integration confirmed.
 - `npm run start` — Runs the compiled production server from `dist/index.js`
 - `npm run db:seed` — Runs initial database seed
 
 ---
 
+## 📅 Maintenance & Release Log
+- **31 October 2026:**
+  - Neon PostgreSQL composite index synchronization on `Review`, `Comment`, and `CareerApplication`.
+  - Schema parity alignment with client app for sequential scan mitigation and database egress optimization.
+- **29 October 2026:**
+  - Prisma client database bundle verification and synchronization.
+  - Production readiness and system integration confirmed.
+
+---
+
 ## 📅 Status & Audit Log
-- **October 21, 2026:** Verified & Production Ready ✅
-- **October 22, 2026:** Validated database connection pooling parameters & error handling.
-- **October 23, 2026:** Health probe `/api/health` connectivity and latency audit confirmed.
-- **October 24, 2026:** Validated JWT cookie and Bearer session revocation resilience.
+- **October 31, 2026:** Database indexes synced, production ready & bandwidth optimized ✅
 - **October 25, 2026:** Live production readiness confirmed; main branch synchronized ✅
 - **Database:** Neon PostgreSQL ORM with Direct & Pooled connection strings configured.
-
-
