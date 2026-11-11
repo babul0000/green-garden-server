@@ -573,17 +573,33 @@ router.delete('/careers/:id', authenticate, requireAdmin, async (req: Request, r
 // ==========================================
 // 8. SETTINGS ROUTES
 // ==========================================
+const PRIVATE_SETTING_KEYS = new Set([
+  'password_reset_tokens',
+  'newsletter_subscribers',
+  'shop_orders',
+]);
+
 router.get('/settings', async (req: Request, res: Response) => {
   try {
     const key = req.query.key ? String(req.query.key) : null;
     if (key) {
+      if (PRIVATE_SETTING_KEYS.has(key)) {
+        return res.status(403).json({ error: 'Forbidden: private setting key' });
+      }
       const setting = await prisma.setting.findUnique({ where: { key } });
       if (!setting) return res.json({ key, value: {} });
       return res.json(setting);
     }
-    let setting = await prisma.setting.findUnique({ where: { key: 'site_config' } });
-    if (!setting) {
-      setting = await prisma.setting.create({
+
+    const allSettings = await prisma.setting.findMany();
+    const merged: Record<string, any> = {};
+    for (const s of allSettings) {
+      if (PRIVATE_SETTING_KEYS.has(s.key)) continue;
+      merged[s.key] = s.value;
+    }
+
+    if (!merged['site_config']) {
+      const created = await prisma.setting.create({
         data: {
           key: 'site_config',
           value: {
@@ -594,8 +610,11 @@ router.get('/settings', async (req: Request, res: Response) => {
           },
         },
       });
+      merged['site_config'] = created.value;
     }
-    res.json(setting);
+
+    const siteConf = (merged['site_config'] as Record<string, any>) || {};
+    res.json({ ...siteConf, value: siteConf, ...merged, key: 'site_config' });
   } catch (error) {
     res.status(500).json({ error: safeError(error) });
   }
